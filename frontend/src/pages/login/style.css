@@ -1,0 +1,12 @@
+.container-login {
+    height: 95.5vh;
+}
+.bg-login{
+    background-image: url(../../assets/shopping-bg.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
