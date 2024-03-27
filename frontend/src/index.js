@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
-import App from './app';
-import Header from './components/header/header';
+import LoginPage from './pages/login/login';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <>
-    <Header />
-    <App />
-  </>
+ReactDOM.render(
+  <Router>
+    <Switch>
+      <Route path="/login" component={LoginPage} />
+    </Switch>
+  </Router>,
+  document.getElementById('root')
 );
