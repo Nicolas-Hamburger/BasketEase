@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../../assets/logo-basketease.png';
 
 function LoginPage() {
 
@@ -8,6 +10,7 @@ function LoginPage() {
     const [error, setError] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const intervalo = setInterval(() => {
@@ -26,12 +29,26 @@ function LoginPage() {
         return () => clearInterval(intervalo);
     }, []);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if (username === 'usuario' && password === 'contraseña') {
-            window.location.href = '/home';
-        } else {
-            setError('Usuario o contraseña incorrectos');
+        try {
+            const response = await fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                navigate('/home', {username});
+            } else {
+                const errorData = await response.json();
+                setError(errorData.error || 'Error de inicio de sesión');
+            }
+        } catch (error) {
+            console.error(error); 
+            setError('Error de red');
         }
     };
 
@@ -46,29 +63,33 @@ function LoginPage() {
                         </div>
                     </div>
                 </Grid>
-                <Grid item xs={12} md={6} style={{ padding:"30px" }}>
-                    <form handleSubmit={handleSubmit} className='login-form'>
-                        <Typography variant="h4" gutterBottom>Iniciar Sesión</Typography>
-                        {error && <Typography variant="body2" color="error">{error}</Typography>}
-                        <TextField
-                            label="Usuario"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <TextField
-                            label="Contraseña"
-                            type="password"
-                            variant="outlined"
-                            fullWidth
-                            margin="normal"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button type="submit" variant="contained" color="primary" fullWidth>Iniciar Sesión</Button>
-                    </form>
+                <Grid item xs={12} md={6} style={{ padding: "30px" }}>
+                    <div className='container-forms'>
+                        <form onSubmit={handleSubmit} className='login-form'>
+                            <img src={Logo} alt="" />
+                            <Typography variant="h2">Iniciar Sesión</Typography>
+                            <Typography variant='p'>Por favor digita tus credenciales asignadas para entrar al sistema.</Typography>
+                            {error && <Typography variant="body2" color="error">{error}</Typography>}
+                            <TextField
+                                label="Usuario"
+                                variant="standard"
+                                fullWidth
+                                margin="normal"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <TextField
+                                label="Contraseña"
+                                type="password"
+                                variant="standard"
+                                fullWidth
+                                margin="normal"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <Button type="submit" variant="contained" color="primary">Iniciar Sesión</Button>
+                        </form>
+                    </div>
                 </Grid>
             </Grid>
         </div>
