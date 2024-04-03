@@ -28,7 +28,8 @@ def login():
             usuario = cursor.fetchone()
 
             if usuario:
-                return jsonify({'message': 'Inicio de sesión exitoso'}), 200
+                tipo_usuario = usuario.get("tipo_usuario")
+                return jsonify({'message': 'Inicio de sesión exitoso', 'tipo_usuario': tipo_usuario}), 200
             else:
                 return jsonify({'error': 'Credenciales incorrectas'}), 401
     except Exception as e:
