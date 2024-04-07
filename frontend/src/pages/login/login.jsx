@@ -5,29 +5,31 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo-basketease.png';
 
 function LoginPage() {
-
     const [horaActual, setHoraActual] = useState("");
     const [error, setError] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [credentials, setCredentials] = useState({ username: '', password: '' });
     const navigate = useNavigate();
 
     useEffect(() => {
         const intervalo = setInterval(() => {
             const fechaActual = new Date();
-            const hora = fechaActual.getHours();
-            const minutos = fechaActual.getMinutes();
-            const segundos = fechaActual.getSeconds();
-
-            const horaFormateada = hora < 10 ? `0${hora}` : hora;
-            const minutosFormateados = minutos < 10 ? `0${minutos}` : minutos;
-            const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
-
-            setHoraActual(`${horaFormateada}:${minutosFormateados}:${segundosFormateados}`);
+            setHoraActual(formatearHora(fechaActual));
         }, 1000);
 
         return () => clearInterval(intervalo);
     }, []);
+
+    const formatearHora = (fechaActual) => {
+        const hora = fechaActual.getHours();
+        const minutos = fechaActual.getMinutes();
+        const segundos = fechaActual.getSeconds();
+
+        const horaFormateada = hora < 10 ? `0${hora}` : hora;
+        const minutosFormateados = minutos < 10 ? `0${minutos}` : minutos;
+        const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
+
+        return `${horaFormateada}:${minutosFormateados}:${segundosFormateados}`;
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,17 +39,19 @@ function LoginPage() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(credentials)
             });
 
             if (response.ok) {
-                navigate('/home', {username});
+                const userData = await response.json();
+                const { tipo_usuario } = userData;
+                navigate('/home', { state: { ...credentials, tipo_usuario } });
             } else {
                 const errorData = await response.json();
                 setError(errorData.error || 'Error de inicio de sesión');
             }
         } catch (error) {
-            console.error(error); 
+            console.error(error);
             setError('Error de red');
         }
     };
@@ -75,8 +79,8 @@ function LoginPage() {
                                 variant="standard"
                                 fullWidth
                                 margin="normal"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                value={credentials.username}
+                                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                             />
                             <TextField
                                 label="Contraseña"
@@ -84,8 +88,8 @@ function LoginPage() {
                                 variant="standard"
                                 fullWidth
                                 margin="normal"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={credentials.password}
+                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                             />
                             <Button type="submit" variant="contained" color="primary">Iniciar Sesión</Button>
                         </form>
