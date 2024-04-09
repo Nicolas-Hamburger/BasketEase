@@ -1,6 +1,8 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
-import './style.css';
+import '../../styles/login-register.css';
+
 
 import Logo from '../../assets/logo-basketease.png';
 

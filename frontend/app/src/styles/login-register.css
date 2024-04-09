@@ -1,0 +1,86 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+   --color-primary: #4C62B2;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); 
+
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.container-login {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.bg-login {
+    position: relative;
+    background-image: url(../assets/shopping-bg.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bg-login::after {
+    background-color: rgba(0, 0, 0, 0.50);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    content: '';
+}
+
+.bg-login .text {
+    width: 500px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    z-index: 1;
+    color: white;
+}
+
+.bg-login .text h2 {
+    font-weight: 700;
+    font-size: 50px;
+}
+
+.container-forms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 70%;
+    margin: auto;
+}
+
+.container-forms img {
+    width: 40%;
+    display: block;
+    margin: auto;
+}
+
+.container-forms form h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.container-forms button {
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-primary);
+}
