@@ -50,32 +50,70 @@ function RegisterPage() {
                             <img src={Logo} alt="Basketease" title='Basketease' />
                             <Typography variant="h2">Registro de Usuario</Typography>
                             <Typography variant='p'>Por favor ingresa los datos solicitados para registrarte en el sistema.</Typography>
-                            <TextField
-                                label="Nombre"
-                                variant="standard"
-                                fullWidth
-                                margin="normal"
-                                value=""
-                                onChange=""
-                            />
-                            <TextField
-                                label="Correo Electrónico"
-                                type="email"
-                                variant="standard"
-                                fullWidth
-                                margin="normal"
-                                value=""
-                                onChange=""
-                            />
-                            <TextField
-                                label="Contraseña"
-                                type="password"
-                                variant="standard"
-                                fullWidth
-                                margin="normal"
-                                value=""
-                                onChange=""
-                            />
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        required
+                                        label="Nombre"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        required
+                                        label="Apellido"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                        onChange=""
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="Cédula"
+                                        type="Number"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                        onChange=""
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="Teléfono"
+                                        type="Number"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                        onChange=""
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="Correo Electrónico"
+                                        type="email"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                        onChange=""
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="Contraseña"
+                                        type="password"
+                                        variant="standard"
+                                        fullWidth
+                                        margin="normal"
+                                        onChange=""
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+
+                                </Grid>
+                            </Grid>
 
                             <Button type="submit" variant="contained" color="primary">Registrarse</Button>
                         </form>

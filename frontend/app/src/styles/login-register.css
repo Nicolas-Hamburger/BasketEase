@@ -8,7 +8,7 @@
     background-image: url(../assets/shopping-bg.webp);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
