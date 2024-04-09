@@ -1,7 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import '../../styles/login-register.css';
+import '../../styles/global.css';
 
 
 import Logo from '../../assets/logo-basketease.png';
@@ -68,7 +70,11 @@ function LoginPage() {
                                 value=""
                                 onChange=""
                             />
-                            <Typography variant='p'>Registrate aquí</Typography>
+                            <Typography variant='p'>
+                                <Link to="/register" className='p-register'>
+                                    Registrate aquí
+                                </Link>
+                            </Typography>
                             <Button type="submit" variant="contained" color="primary">Iniciar Sesión</Button>
                         </form>
                     </div>

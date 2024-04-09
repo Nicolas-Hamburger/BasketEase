@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import '../../styles/login-register.css';
+import '../../styles/global.css';
 import Logo from '../../assets/logo-basketease.png';
 
 function RegisterPage() {
@@ -75,6 +76,7 @@ function RegisterPage() {
                                 value=""
                                 onChange=""
                             />
+
                             <Button type="submit" variant="contained" color="primary">Registrarse</Button>
                         </form>
                     </div>

@@ -7,7 +7,7 @@ import RegisterPage from './pages/register/register';
 createRoot(document.getElementById('root')).render(
   <Router>
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
     </Routes>
   </Router>
