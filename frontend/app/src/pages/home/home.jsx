@@ -1,7 +1,7 @@
 "use cliente";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Typography, TextField, Button } from "@material-ui/core";
+import { Grid, Typography, TextField, Button, Box } from "@material-ui/core";
 import "../../styles/global.css";
 import Navbar from "../../components/navbar/navbar";
 
@@ -12,10 +12,10 @@ function Home() {
         <Grid item xs={1}>
           <Navbar />
         </Grid>
-        <Grid item xs={10}>
-          <Grid className="container-global">
-            <Typography variant="h1">Home</Typography>
-          </Grid>
+        <Grid item xs={11}>
+          <Box className="container-global">
+            <Typography variant="h4">Bienvenido Usuario</Typography>
+          </Box>
         </Grid>
       </Grid>
     </>

@@ -6,6 +6,7 @@
 
 :root {
   --color-primary: #4c62b2;
+  --color-secundary: #1c1c53;
   --color-red: #e93434;
 }
 
@@ -18,5 +19,5 @@ body {
 }
 
 .container-global {
-  padding: 1rem 2rem;
+  padding: 1rem 0.5rem;
 }
