@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import '../../styles/login-register.css';
 import '../../styles/global.css';
-
-
 import Logo from '../../assets/logo-basketease.png';
 
 function LoginPage() {
@@ -54,7 +52,7 @@ function LoginPage() {
                             <Typography variant="h2">Iniciar Sesión</Typography>
                             <Typography variant='p'>Por favor digita tus credenciales asignadas para entrar al sistema.</Typography>
                             <TextField
-                                label="Usuario"
+                                label="Correo electrónico"
                                 variant="standard"
                                 fullWidth
                                 margin="normal"

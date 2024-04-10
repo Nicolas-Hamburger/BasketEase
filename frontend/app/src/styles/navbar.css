@@ -1,0 +1,10 @@
+nav {
+  background-color: var(--color-primary);
+  height: 100vh;
+  width: 100%;
+  box-shadow: 0x 2px 125px black;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
