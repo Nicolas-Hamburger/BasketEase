@@ -1,4 +1,3 @@
-"use client"
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
@@ -6,7 +5,7 @@ import '../../styles/login-register.css';
 import '../../styles/global.css';
 import Logo from '../../assets/logo-basketease.png';
 
-function LoginPage() {
+export default function LoginPage() {
     const [horaActual, setHoraActual] = useState("");
 
     useEffect(() => {
@@ -73,7 +72,7 @@ function LoginPage() {
                                     Registrate aquí
                                 </Link>
                             </Typography>
-                            <Button type="submit" variant="contained" color="primary">Iniciar Sesión</Button>
+                            <Button type="submit" variant="contained">Iniciar Sesión</Button>
                         </form>
                     </div>
                 </Grid>
@@ -81,5 +80,3 @@ function LoginPage() {
         </div>
     );
 }
-
-export default LoginPage;

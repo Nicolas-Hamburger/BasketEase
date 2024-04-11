@@ -1,11 +1,10 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import { Grid, Typography, TextField, Button } from "@material-ui/core";
 import "../../styles/login-register.css";
 import "../../styles/global.css";
 import Logo from "../../assets/logo-basketease.png";
 
-function RegisterPage() {
+export default function RegisterPage() {
   const [horaActual, setHoraActual] = useState("");
 
   useEffect(() => {
@@ -125,5 +124,3 @@ function RegisterPage() {
     </div>
   );
 }
-
-export default RegisterPage;

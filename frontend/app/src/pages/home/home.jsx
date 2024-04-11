@@ -1,11 +1,10 @@
-"use cliente";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Grid, Typography, TextField, Button, Box } from "@material-ui/core";
 import "../../styles/global.css";
 import Navbar from "../../components/navbar/navbar";
 
-function Home() {
+export default function Home () {
   return (
     <>
       <Grid container>
@@ -21,5 +20,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;

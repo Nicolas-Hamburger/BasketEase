@@ -5,8 +5,10 @@
 }
 
 :root {
-  --color-primary: #4c62b2;
+  --color-primary: #5465a3;
   --color-secundary: #1c1c53;
+  --color-three: #0b0b28;
+
   --color-red: #e93434;
 }
 
@@ -20,4 +22,29 @@ body {
 
 .container-global {
   padding: 1rem 0.5rem;
+}
+
+.button-primary {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+.container-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+}
+
+.container-modal .modal-body {
+  padding: 25px 50px;
+}
+
+#modal-modal-title {
+  background-color:var(--color-three);
+  padding: 10px;
+  color: white;
 }

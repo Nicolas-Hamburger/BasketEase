@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
@@ -11,7 +10,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Box from '@mui/material/Box';
 import "../../styles/navbar.css";
 
-function Navbar() {
+export default function Navbar () {
   return (
     <>
       <Box className="container-nav">
@@ -46,5 +45,3 @@ function Navbar() {
 
   );
 }
-
-export default Navbar;
