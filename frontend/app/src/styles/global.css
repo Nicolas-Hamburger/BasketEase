@@ -22,6 +22,7 @@ body {
 
 .container-global {
   padding: 1rem 0.5rem;
+  padding-right: 3rem !important;
 }
 
 .button-primary {
@@ -40,11 +41,27 @@ body {
 }
 
 .container-modal .modal-body {
-  padding: 25px 50px;
+  padding-top: 30px !important;
+  padding: 50px;
 }
 
 #modal-modal-title {
-  background-color:var(--color-three);
-  padding: 10px;
+  background-color: var(--color-three);
+  padding: 20px 30px;
   color: white;
+}
+
+.titles {
+  font-weight: 700 !important;
+  font-size: 28px !important;
+}
+
+.texts {
+  margin: 1.5rem 0 !important;
+}
+
+.alerts {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }

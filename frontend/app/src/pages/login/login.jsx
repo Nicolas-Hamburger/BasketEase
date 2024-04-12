@@ -72,7 +72,7 @@ export default function LoginPage() {
                                     Registrate aquí
                                 </Link>
                             </Typography>
-                            <Button type="submit" variant="contained">Iniciar Sesión</Button>
+                            <Button type="submit" variant="contained" className='button-primary'>Iniciar Sesión</Button>
                         </form>
                     </div>
                 </Grid>

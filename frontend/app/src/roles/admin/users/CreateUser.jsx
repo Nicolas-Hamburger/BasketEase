@@ -1,12 +1,25 @@
 import React from "react";
 import { Grid, Typography, TextField, Button, Box, Modal } from "@material-ui/core";
 import "../../../styles/global.css";
+import { Link } from "react-router-dom";
 import Navbar from "../../../components/navbar/navbar";
+import Alert from '@mui/material/Alert';
 
 export default function CreateUser() {
     const [open, setOpen] = React.useState(false);
+    const [showAlert, setShowAlert] = React.useState(false);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleCreateUser = () => {
+        setShowAlert(true)
+        setOpen(false)
+
+        setTimeout(() => {
+            setShowAlert(false)
+        }, 3000)
+    }
 
     return (
         <>
@@ -18,14 +31,16 @@ export default function CreateUser() {
                     <Box className="container-global">
                         <Box>
                             <Grid item xs={12}>
-                                <Typography variant="h4" x>Creación usuarios</Typography>
-                                <Typography variant="p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem numquam quos unde deleniti repellendus autem dicta quae velit vitae praesentium! Ab iure quod quo? Quod provident ipsa aut dicta vero?</Typography>
+                                <Typography variant="h4" component="h1" className="titles">Gestión de Usuarios</Typography>
+                                <Typography component="p">Bienvenido a la función de Gestión de Usuarios de nuestro software. Aquí, los usuarios tienen el control total sobre la creación y gestión de cuentas, brindando una experiencia personalizada y segura.</Typography>
                             </Grid>
 
                             <Grid item xs={12}>
                                 <Box style={{ marginTop: '10px' }}>
-                                    <Button className="button-primary" style={{marginRight: '10px'}} onClick={handleOpen} variant="contained">Crear usuario</Button>
-                                    <Button className="button-primary" variant="contained">Ver usuarios</Button>
+                                    <Button className="button-primary" style={{ marginRight: '10px' }} onClick={handleOpen} variant="contained">Crear usuario</Button>
+                                    <Link to="/admin/users/list">
+                                        <Button className="button-primary" variant="contained">Ver usuarios</Button>
+                                    </Link>
                                 </Box>
                             </Grid>
                         </Box>
@@ -104,7 +119,8 @@ export default function CreateUser() {
                                                 onChange=""
                                             />
                                         </Grid>
-                                        <Button className="button-primary" type="submit" variant="contained">
+
+                                        <Button className="button-primary" type="submit" variant="contained" onClick={handleCreateUser}>
                                             Crear
                                         </Button>
                                         <Grid item xs={6}></Grid>
@@ -115,6 +131,11 @@ export default function CreateUser() {
                     </Box>
                 </Grid>
             </Grid>
+            {showAlert && (
+                <Alert severity="success" variant="filled" className="alerts">
+                    ¡Usuario creado exitosamente!
+                </Alert>
+            )}
         </>
     );
 }
