@@ -42,3 +42,9 @@ nav .items-nav a {
   display: flex;
   font-size: 16px;
 }
+
+@media (max-width:994px) {
+  .container-nav {
+    max-width: 100%;
+  }
+}

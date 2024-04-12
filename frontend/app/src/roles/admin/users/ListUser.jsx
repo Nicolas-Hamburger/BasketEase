@@ -10,6 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ListUser() {
     const [open, setOpen] = React.useState(false);
@@ -38,8 +40,8 @@ export default function ListUser() {
                     <Box className="container-global">
                         <Box>
                             <Grid item xs={12}>
-                                <Typography variant="h4" component="h1" className="titles">Tus usuarios en el software (1)</Typography>
-                                <Typography component="p"  className="texts">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit perspiciatis explicabo libero, sint fugiat magnam placeat voluptate praesentium doloribus accusamus necessitatibus eos? Atque in modi voluptate. Soluta quos vel sed.</Typography>
+                                <Typography variant="h4" component="h1" className="titles">Usuarios en BasketEase (1)</Typography>
+                                <Typography component="p" className="texts">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit perspiciatis explicabo libero, sint fugiat magnam placeat voluptate praesentium doloribus accusamus necessitatibus eos? Atque in modi voluptate. Soluta quos vel sed.</Typography>
                             </Grid>
 
                             <Grid item xs={12}>
@@ -54,13 +56,41 @@ export default function ListUser() {
                                                 <TableCell>Teléfono</TableCell>
                                                 <TableCell>Correo</TableCell>
                                                 <TableCell>Fecha de Registro</TableCell>
+                                                <TableCell>Acción</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
 
                                             <TableRow
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                                <TableCell component="th" scope="row">
+                                                <TableCell>
+                                                    1
+                                                </TableCell>
+                                                <TableCell>
+                                                    2
+                                                </TableCell>
+                                                <TableCell>
+                                                    3
+                                                </TableCell>
+                                                <TableCell>
+                                                    4
+                                                </TableCell>
+                                                <TableCell>
+                                                    5
+                                                </TableCell>
+                                                <TableCell>
+                                                    6
+                                                </TableCell>
+                                                <TableCell>
+                                                    7
+                                                </TableCell>
+                                                <TableCell>
+                                                    <a> 
+                                                        <ModeEditIcon sx={{ fontSize: 20}} />
+                                                    </a>
+                                                    <a> 
+                                                        <DeleteIcon sx={{ fontSize: 20}} />
+                                                    </a>
                                                 </TableCell>
                                             </TableRow>
                                         </TableBody>

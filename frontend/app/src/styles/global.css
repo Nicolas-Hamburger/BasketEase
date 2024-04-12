@@ -65,3 +65,10 @@ body {
   bottom: 10px;
   right: 10px;
 }
+
+@media (max-width:994px) {
+  .container-global {
+    padding-right: 1rem !important;
+    padding-left: 1.2rem !important;
+  }
+}
