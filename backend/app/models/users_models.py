@@ -6,6 +6,7 @@ class Users(BaseModel):
     nombre: str
     apellido: str
     tipo_usuario: int
+    numero_cedula: int
     telefono: int
     email: EmailStr
     password: SecretStr

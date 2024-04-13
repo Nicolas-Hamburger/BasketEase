@@ -29,7 +29,7 @@ class UserControllers:
                 payload.append(content)
                 content = {}
             json_data = jsonable_encoder(payload)
-            return {"Resultado API: ": jsonable_encoder}
+            return {"Resultado API: ": json_data}
         except Exception as error:
             return {"Resultado API: ": str(error)}
         
@@ -37,7 +37,7 @@ class UserControllers:
         try:
             conect = get_connection()
             cursor = conect.cursor()
-            cursor.execute("SELECT * FROM usuarios WHERE user_id = %s", (userId))
+            cursor.execute("SELECT * FROM usuarios WHERE user_id = %s", (userId,))
             result = cursor.fetchone()
             if result:
                 user = {
@@ -45,10 +45,11 @@ class UserControllers:
                     'nombre': result[1],
                     'apellido': result[2],
                     'tipo_usuario': result[3],
-                    'telefono': result[4],
-                    'email': result[5],
-                    'password': result[6],
-                    'fecha_registro': result[7],
+                    'numero_cedula': result[4],
+                    'telefono': result[5],
+                    'email': result[6],
+                    'password': result[7],
+                    'fecha_registro': result[8],
                 }
                 return {"Resultado API: ": user}
             else:
@@ -63,11 +64,12 @@ class UserControllers:
             Name = nuser.nombre
             LastName = nuser.apellido
             TypeUser = nuser.tipo_usuario
+            NumberIdentification = nuser.numero_cedula
             Phone = nuser.telefono
             Email = nuser.email
             Password = nuser.password
-            cursor.execute("INSERT INTO usuarios(nombre, apellido, tipo_usuario, telefono, email, password) VALUES (%s, %s, %s, %s, %s, %s,)",
-                           (Name, LastName, TypeUser, Phone, Email, Password))
+            cursor.execute("INSERT INTO usuarios(nombre, apellido, tipo_usuario, numero_cedula, telefono, email, password) VALUES (%s, %s, %s, %s, %s, %s,)",
+                           (Name, LastName, TypeUser, NumberIdentification, Phone, Email, Password))
             conect.commit()
             conect.close()
             return {"Información:": "Usuario registrado exitosamente"}
@@ -79,7 +81,7 @@ class UserControllers:
             conect = get_connection()
             cursor = conect.cursor()
             cursor.execute(
-                "SELECT user_id FROM usuarios WHERE user_id = %s", (userId))
+                "SELECT user_id FROM usuarios WHERE user_id = %s", (userId,))
             result = cursor.fetchone()
             if not result:
                 raise HTTPException(
@@ -88,11 +90,12 @@ class UserControllers:
             Name = nuser.nombre
             LastName = nuser.apellido
             TypeUser = nuser.tipo_usuario
+            NumberIdentification = nuser.numero_cedula
             Phone = nuser.telefono
             Email = nuser.email
             Password = nuser.password
-            cursor.execute( "UPDATE usuarios SET nombre = %s, apellido = %s, tipo_usuario = %s, telefono = %s, email = %s, password = %s WHERE user_id = %s",
-            (Name, LastName, TypeUser, Phone, Email, Password, userId))
+            cursor.execute( "UPDATE usuarios SET nombre = %s, apellido = %s, tipo_usuario = %s, numero_cedula = %s, telefono = %s, email = %s, password = %s WHERE user_id = %s",
+            (Name, LastName, TypeUser, NumberIdentification, Phone, Email, Password, userId))
             conect.commit()
             conect.close()
             return {"Información:": "Usuario actualizado exitosamente"}
