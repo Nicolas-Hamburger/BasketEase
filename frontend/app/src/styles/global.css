@@ -66,6 +66,10 @@ body {
   right: 10px;
 }
 
+.btn-action {
+  min-width: 10px !important;
+}
+
 @media (max-width:994px) {
   .container-global {
     padding-right: 1rem !important;

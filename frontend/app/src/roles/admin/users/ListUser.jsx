@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Typography, TextField, Button, Box, Modal } from "@material-ui/core";
 import "../../../styles/global.css";
 import Navbar from "../../../components/navbar/navbar";
@@ -12,26 +12,40 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function ListUser() {
-    const [open, setOpen] = React.useState(false);
-    const [showAlert, setShowAlert] = React.useState(false);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [showAlertCreate, setShowAlertCreate] = useState(false);
+    const [showAlertDelete, setShowAlertDelete] = useState(false);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpenCreateModal = () => setOpenCreateModal(true);
+    const handleCloseCreateModal = () => setOpenCreateModal(false);
+    const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+    const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
     const handleCreateUser = () => {
-        setShowAlert(true)
-        setOpen(false)
-
+        setShowAlertCreate(true);
+        handleCloseCreateModal();
         setTimeout(() => {
-            setShowAlert(false)
-        }, 3000)
-    }
+            setShowAlertCreate(false);
+        }, 3000);
+    };
+    const handleDeleteUser = () => {
+        setShowAlertDelete(true);
+        handleCloseDeleteModal(true)
+        setTimeout(() => {
+            setShowAlertDelete(false);
+        }, 3000);
+    };
 
     return (
         <>
-
             <Grid container>
                 <Grid item xs={1}>
                     <Navbar />
@@ -55,8 +69,8 @@ export default function ListUser() {
                                                 <TableCell>Cédula</TableCell>
                                                 <TableCell>Teléfono</TableCell>
                                                 <TableCell>Correo</TableCell>
-                                                <TableCell>Fecha de Registro</TableCell>
-                                                <TableCell>Acción</TableCell>
+                                                <TableCell>F. Registro</TableCell>
+                                                <TableCell>Acciones</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -85,12 +99,12 @@ export default function ListUser() {
                                                     7
                                                 </TableCell>
                                                 <TableCell>
-                                                    <a> 
-                                                        <ModeEditIcon sx={{ fontSize: 20}} />
-                                                    </a>
-                                                    <a> 
-                                                        <DeleteIcon sx={{ fontSize: 20}} />
-                                                    </a>
+                                                    <Button className="btn-action" onClick={handleOpenCreateModal}>
+                                                        <ModeEditIcon sx={{ fontSize: 20 }} />
+                                                    </Button>
+                                                    <Button className="btn-action" onClick={handleOpenDeleteModal}>
+                                                        <DeleteIcon sx={{ fontSize: 20 }} />
+                                                    </Button>
                                                 </TableCell>
                                             </TableRow>
                                         </TableBody>
@@ -100,8 +114,8 @@ export default function ListUser() {
                             </Grid>
                         </Box>
                         <Modal
-                            open={open}
-                            onClose={handleClose}
+                            open={openCreateModal}
+                            onClose={handleCloseCreateModal}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
@@ -182,13 +196,40 @@ export default function ListUser() {
                                     </Grid>
                                 </Box>
                             </Box>
+
                         </Modal>
+                        <Dialog
+                            open={openDeleteModal}
+                            onClose={handleCloseDeleteModal}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"¿Esta seguro de eliminar el usuario?"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Usted desea eliminar el usuario ()
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleDeleteUser}>Si</Button>
+                                <Button onClick={handleCloseDeleteModal} autoFocus>
+                                    No
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                 </Grid>
             </Grid>
-            {showAlert && (
+            {showAlertCreate && (
                 <Alert severity="success" variant="filled" className="alerts">
                     ¡Usuario creado exitosamente!
+                </Alert>
+            )}
+            {showAlertDelete && (
+                <Alert severity="info" variant="filled" className="alerts">
+                    ¡Usuario eliminado exitosamente!
                 </Alert>
             )}
 
