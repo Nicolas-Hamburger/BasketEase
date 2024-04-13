@@ -1,7 +1,7 @@
 from pydantic import BaseModel, SecretStr, EmailStr
 from datetime import datetime
 
-class user(BaseModel):
+class Users(BaseModel):
     user_id: int
     nombre: str
     apellido: str
