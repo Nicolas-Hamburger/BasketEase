@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class sale (BaseModel):
+class Sale (BaseModel):
     venta_id: int
     fecha_venta: datetime
     usuario_id: int
