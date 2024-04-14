@@ -17,11 +17,12 @@ class SalesControllers:
             content = {}
             for data in result:
                 content = {
-                    'venta_id': data[0],
-                    'fecha_venta': data[1],
-                    'usuario_id': data[2],
-                    'total_venta': data[3],
-                    'fecha_registro': data[4],
+                    'venta_id': result[0],
+                    'fecha_venta': result[1],
+                    'producto_id': result[2],
+                    'usuario_id': result[3],
+                    'total_venta': result[4],
+                    'fecha_registro': result[5],
                 }
                 payload.append(content)
                 content = {}
@@ -41,9 +42,11 @@ class SalesControllers:
             if result:
                 sale = {
                     'venta_id': result[0],
-                    'usuario_id': result[2],
-                    'total_venta': result[3],
-                    'fecha_registro': result[4],
+                    'fecha_venta': result[1],
+                    'producto_id': result[2],
+                    'usuario_id': result[3],
+                    'total_venta': result[4],
+                    'fecha_registro': result[5],
                 }
                 return {"Resultado API: ": sale}
             else:
@@ -51,4 +54,43 @@ class SalesControllers:
         except Exception as error:
             return {"Resultado API:": str(error)}
             
-            
+    def get_sale_idUser(self, userId):
+        try:
+            conect = get_connection()
+            cursor = conect.cursor()
+            cursor.execute("SELECT * FROM usuarios WHERE usuario_id = %s", (userId,))
+            result = cursor.fetchone()
+            if result:
+                sale = {
+                    'venta_id': result[0],
+                    'fecha_venta': result[1],
+                    'producto_id': result[2],
+                    'usuario_id': result[3],
+                    'total_venta': result[4],
+                    'fecha_registro': result[5],
+                }
+                return {"Resultado API: ": sale}
+            else:
+                return {"Resultado API: ": "El usuario no ha realizado ninguna venta"}
+        except Exception as error:
+            return {"Resultado API: ": str(error)}
+    
+    def post_sale(self, nsale: Sale):
+        try:
+            conect = get_connection()
+            cursor = conect.cursor()
+            Product = nsale.producto_id
+            TotalSale = nsale.total_venta
+            cursor.execute("INSERT INTO ventas(producto_id, total_venta) VALUES (%s, %s)", 
+                           (Product,TotalSale))
+            conect.commit()
+            conect.close()
+            return {"Información:" "Venta registrada correctamente"}
+        except Exception as error:
+            return {"Resultado API:": str(error)}
+        
+    # Put
+	# Actualizar venta
+
+	# Delete
+	# Eliminar venta
