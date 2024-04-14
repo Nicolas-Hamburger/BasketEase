@@ -68,7 +68,7 @@ class UserControllers:
             Phone = nuser.telefono
             Email = nuser.email
             Password = nuser.password
-            cursor.execute("INSERT INTO usuarios(nombre, apellido, tipo_usuario, numero_cedula, telefono, email, password) VALUES (%s, %s, %s, %s, %s, %s,)",
+            cursor.execute("INSERT INTO usuarios(nombre, apellido, tipo_usuario, numero_cedula, telefono, email, password) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                            (Name, LastName, TypeUser, NumberIdentification, Phone, Email, Password))
             conect.commit()
             conect.close()
@@ -107,14 +107,14 @@ class UserControllers:
             conect = get_connection()
             cursor = conect.cursor()
             cursor.execute(
-                "SELECT user_id FROM usuarios WHERE user_id = %s", (userId))
+                "SELECT user_id FROM usuarios WHERE user_id = %s", (userId,))
             result = cursor.fetchone()
             if not result:
                 raise HTTPException(
                     status_code=400, detail="Usuario no encontrado en la base de datos"
                 ) 
             cursor.execute(
-                "DELETE FROM usuarios WHERE user_id= %s", (userId))
+                "DELETE FROM usuarios WHERE user_id= %s", (userId,))
             conect.commit()
             cursor.close()
             cursor = conect.cursor()
