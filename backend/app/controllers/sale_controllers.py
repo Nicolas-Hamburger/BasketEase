@@ -88,9 +88,47 @@ class SalesControllers:
             return {"Información:" "Venta registrada correctamente"}
         except Exception as error:
             return {"Resultado API:": str(error)}
-        
-    # Put
-	# Actualizar venta
 
-	# Delete
-	# Eliminar venta
+    def put_sale(self, saleId: int, nsale: Sales):
+        try:
+            conect = get_connection()
+            cursor = conect.cursor()
+            cursor.execute(
+                "SELECT venta_id FROM ventas WHERE venta_id = %s", (saleId,))
+            result = cursor.fetchone()
+            if not result:
+                raise HTTPException(
+                    status_code=400, detail="Venta no encontrada en la base de datos"
+                )
+            ProductId: nsale.producto_id
+            TotalSale: nsale.total_venta
+            cursor.execute("UPDATE ventas SET producto_id = %s, total_venta = %s WHERE venta_id = %s", (ProductId, TotalSale, saleId))
+            conect.commit()
+            conect.close()
+            return {"Información:": "Venta actualizada exitosamente"}
+        except Exception as error:
+            return {"Resultadoa API": str(error)}
+    
+    def delete_sale(self, saleId: int):
+        try:
+            conect = get_connection()
+            cursor = conect.cursor()
+            cursor.execute(
+                "SELECT venta_id FROM ventas WHERE venta_id = %s", (saleId,))
+            result = cursor.fetchone()
+            if not result:
+                raise HTTPException(
+                    status_code=400, detail="Usuario no encontrado en la base de datos"
+                ) 
+            cursor.execute(
+              "DELETE FROM ventas WHERE ventas_id= %s", (saleId,))
+            conect.commit()
+            cursor.close()
+            cursor = conect.cursor()
+            cursor.execute("ALTER TABLE ventas AUTO_INCREMENT = 1")
+            conect.commit()
+            return {"Información: ": "Venta eliminada exitosamente"}
+        except Exception as error:
+            return {"Resultado API: ": str(error)}
+
+sales_controllers = SalesControllers()
