@@ -89,7 +89,7 @@ class SalesControllers:
         except Exception as error:
             return {"Resultado API:": str(error)}
 
-    def put_sale(self, saleId: int, nsale: Sales):
+    def update_sale(self, saleId: int, nsale: Sale):
         try:
             conect = get_connection()
             cursor = conect.cursor()
