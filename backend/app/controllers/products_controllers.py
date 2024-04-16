@@ -16,14 +16,14 @@ class ProductsControllers:
             content = {}
             for data in result:
                 content = {
-                    'producto_id': result[0],
-                    'nombre': result[1],
-                    'descripcion': result[2],
+                    'producto_id': data[0],
+                    'nombre': data[1],
+                    'descripcion': data[2],
                     'proveedor': result[3],
-                    'cantidad_disponible': result[4],
-                    'cantidad_minima': result[5],
-                    'precio_unitario': result[6],
-                    'fecha_ultima_actualizacion': result[7],
+                    'cantidad_disponible': data[4],
+                    'cantidad_minima': data[5],
+                    'precio_unitario': data[6],
+                    'fecha_ultima_actualizacion': data[7],
                 }
                 payload.append(content)
                 content = {}
