@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class detailSale (BaseModel):
+class DetailSale (BaseModel):
     detalle_venta_id: int
     venta_id: int
     product_id: int
