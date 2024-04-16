@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class inventory (BaseModel):
+class Inventory (BaseModel):
     inventario_id: int
     producto_id: int
     cantidad_actual: int
