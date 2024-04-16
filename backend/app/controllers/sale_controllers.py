@@ -17,12 +17,12 @@ class SalesControllers:
             content = {}
             for data in result:
                 content = {
-                    'venta_id': result[0],
-                    'fecha_venta': result[1],
-                    'producto_id': result[2],
-                    'usuario_id': result[3],
-                    'total_venta': result[4],
-                    'fecha_registro': result[5],
+                    'venta_id': data[0],
+                    'fecha_venta': data[1],
+                    'producto_id': data[2],
+                    'usuario_id': data[3],
+                    'total_venta': data[4],
+                    'fecha_registro': data[5],
                 }
                 payload.append(content)
                 content = {}
