@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import '../../styles/login-register.css';
 import '../../styles/global.css';
@@ -7,6 +7,9 @@ import Logo from '../../assets/logo-basketease.png';
 
 export default function LoginPage() {
     const [horaActual, setHoraActual] = useState("");
+    const [error, setError] = useState('');
+    const [credentials, setCredentials] = useState({ username: '', password: '' });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const intervalo = setInterval(() => {
@@ -31,6 +34,30 @@ export default function LoginPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:8000/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: credentials.username,
+                    password: credentials.password,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // Aquí puedes guardar el token en el localStorage o en el contexto
+                localStorage.setItem('token', data.access_token);
+                navigate('/home'); // Redirigir al usuario a la página de inicio
+            } else {
+                setError('Nombre de usuario o contraseña incorrectos');
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+            setError('Error de red');
+        }
     };
 
     return (
@@ -50,13 +77,14 @@ export default function LoginPage() {
                             <img src={Logo} alt="Basketease" title='Basketease' />
                             <Typography variant="h2">Iniciar Sesión</Typography>
                             <Typography variant='p'>Por favor digita tus credenciales asignadas para entrar al sistema.</Typography>
+                            {error && <Typography variant="body2" color="error">{error}</Typography>}
                             <TextField
                                 label="Correo electrónico"
                                 variant="standard"
                                 fullWidth
                                 margin="normal"
-                                value=""
-                                onChange=""
+                                value={credentials.username}
+                                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                             />
                             <TextField
                                 label="Contraseña"
@@ -64,8 +92,8 @@ export default function LoginPage() {
                                 variant="standard"
                                 fullWidth
                                 margin="normal"
-                                value=""
-                                onChange=""
+                                value={credentials.password}
+                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                             />
                             <Typography variant='p'>
                                 <Link to="/register" className='p-register'>

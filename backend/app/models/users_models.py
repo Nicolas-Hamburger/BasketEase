@@ -1,11 +1,8 @@
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from pydantic import BaseModel
+from typing import Optional
 
-class Users(BaseModel):
-    nombre: str
-    apellido: str
-    tipo_usuario: int
-    numero_cedula: int
-    telefono: int
-    email: EmailStr
-    password: str
+class User(BaseModel):
+    id: Optional[int]
+    username: str
+    email: str
+    hashed_password: str

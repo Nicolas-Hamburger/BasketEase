@@ -6,6 +6,8 @@ from routes.sale_routes import router as sale_router
 from routes.products_routes import router as products_router
 from routes.inventory_routes import router as inventory_router
 from routes.detailsale_routes import router as detailsale_router
+from routes.detailsale_routes import router as detailsale_router
+from routes.auth_routes import router as auth_routes
 
 app = FastAPI()
 
@@ -26,6 +28,7 @@ app.include_router(sale_router)
 app.include_router(products_router)
 app.include_router(inventory_router)
 app.include_router(detailsale_router)
+app.include_router(auth_routes)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)    
