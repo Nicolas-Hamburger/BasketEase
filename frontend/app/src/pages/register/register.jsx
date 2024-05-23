@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Grid, Typography, TextField, Button } from "@material-ui/core";
 import "../../styles/login-register.css";
 import "../../styles/global.css";
 import Logo from "../../assets/logo-basketease.png";
+import { UserContext } from "../../context/UserContext";
 
 export default function RegisterPage() {
+  const { setUser } = useContext(UserContext);
   const [horaActual, setHoraActual] = useState("");
   const [userData, setUserData] = useState({
     nombre: '',
@@ -48,7 +50,9 @@ export default function RegisterPage() {
     event.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:8000/usuarios', userData);
+      console.log(response.data); 
       alert("Usuario registrado exitosamente");
+      setUser(userData);
     } catch (error) {
       console.error("Error registrando usuario:", error);
       alert("Error registrando usuario");

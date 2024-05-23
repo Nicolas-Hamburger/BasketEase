@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Grid, Typography, TextField, Button, Box } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import "../../styles/global.css";
 import Navbar from "../../components/navbar/navbar";
+import { UserContext } from "../../context/UserContext";
 
-export default function Home () {
+export default function Home() {
+  const { user } = useContext(UserContext);
+
   return (
     <>
       <Grid container>
@@ -13,7 +16,7 @@ export default function Home () {
         </Grid>
         <Grid item xs={11}>
           <Box className="container-global">
-            <Typography variant="h4">Bienvenido Usuario</Typography>
+            <Typography variant="h4">Bienvenido {user ? user.nombre : 'Usuario'}</Typography>
           </Box>
         </Grid>
       </Grid>
