@@ -1,141 +1,124 @@
-import React from "react";
-import { Grid, Typography, TextField, Button, Box, Modal } from "@material-ui/core";
-import "../../../styles/global.css";
-import { Link } from "react-router-dom";
-import Navbar from "../../../components/navbar/navbar";
-import Alert from '@mui/material/Alert';
+import React, { useState } from "react";
+import axios from "axios";
+import { Grid, Typography, TextField, Button, Box } from "@material-ui/core";
+import "../../styles/global.css";
+import Navbar from "../../components/navbar/navbar";
 
-export default function CreateUser() {
-    const [open, setOpen] = React.useState(false);
-    const [showAlert, setShowAlert] = React.useState(false);
+const CreateUser = () => {
+  const [newUser, setNewUser] = useState({
+    nombre: "",
+    apellido: "",
+    tipo_usuario: "",
+    numero_cedula: "",
+    telefono: "",
+    email: "",
+    password: ""
+  });
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prevUser) => ({
+      ...prevUser,
+      [name]: value
+    }));
+  };
 
-    const handleCreateUser = () => {
-        setShowAlert(true)
-        setOpen(false)
-
-        setTimeout(() => {
-            setShowAlert(false)
-        }, 3000)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://127.0.0.1:8000/post/users", newUser);
+      alert("Usuario creado exitosamente");
+      setNewUser({
+        nombre: "",
+        apellido: "",
+        tipo_usuario: "",
+        numero_cedula: "",
+        telefono: "",
+        email: "",
+        password: ""
+      });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      alert("Error creando usuario");
     }
+  };
 
-    return (
-        <>
-            <Grid container>
-                <Grid item xs={1}>
-                    <Navbar />
-                </Grid>
-                <Grid item xs={11}>
-                    <Box className="container-global">
-                        <Box>
-                            <Grid item xs={12}>
-                                <Typography variant="h4" component="h1" className="titles">Gestión de Usuarios</Typography>
-                                <Typography component="p">Bienvenido a la función de Gestión de Usuarios de nuestro software. Aquí, los usuarios tienen el control total sobre la creación y gestión de cuentas, brindando una experiencia personalizada y segura.</Typography>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <Box style={{ marginTop: '10px' }}>
-                                    <Button className="button-primary" style={{ marginRight: '10px' }} onClick={handleOpen} variant="contained">Crear usuario</Button>
-                                    <Link to="/admin/users/list">
-                                        <Button className="button-primary" variant="contained">Ver usuarios</Button>
-                                    </Link>
-                                </Box>
-                            </Grid>
-                        </Box>
-                        <Modal
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box className="container-modal">
-                                <Typography id="modal-modal-title" variant="h5">
-                                    Formulario de creación
-                                </Typography>
-                                <Box className="modal-body">
-                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                        Por favor para crear un usuario llene los siguientes campos
-                                    </Typography>
-
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                required
-                                                label="Nombre"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                required
-                                                label="Apellido"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Cédula"
-                                                type="Number"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Teléfono"
-                                                type="Number"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Correo Electrónico"
-                                                type="email"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Contraseña"
-                                                type="password"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-
-                                        <Button className="button-primary" type="submit" variant="contained" onClick={handleCreateUser}>
-                                            Crear
-                                        </Button>
-                                        <Grid item xs={6}></Grid>
-                                    </Grid>
-                                </Box>
-                            </Box>
-                        </Modal>
-                    </Box>
-                </Grid>
-            </Grid>
-            {showAlert && (
-                <Alert severity="success" variant="filled" className="alerts">
-                    ¡Usuario creado exitosamente!
-                </Alert>
-            )}
-        </>
-    );
+  return (
+    <>
+      <Grid container>
+        <Grid item xs={1}>
+          <Navbar />
+        </Grid>
+        <Grid item xs={11}>
+          <Box className="container-global">
+            <Typography variant="h4">Crear Usuario</Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Nombre"
+                name="nombre"
+                value={newUser.nombre}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Apellido"
+                name="apellido"
+                value={newUser.apellido}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Tipo de Usuario"
+                name="tipo_usuario"
+                value={newUser.tipo_usuario}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Número de Cédula"
+                name="numero_cedula"
+                value={newUser.numero_cedula}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Teléfono"
+                name="telefono"
+                value={newUser.telefono}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Email"
+                name="email"
+                value={newUser.email}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Contraseña"
+                name="password"
+                type="password"
+                value={newUser.password}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+              <Button type="submit" variant="contained" color="primary">
+                Crear Usuario
+              </Button>
+            </form>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
+  );
 }
+
+export default CreateUser;

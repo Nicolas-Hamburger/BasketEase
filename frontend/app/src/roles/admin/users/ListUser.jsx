@@ -1,238 +1,204 @@
-import React, { useState } from "react";
-import { Grid, Typography, TextField, Button, Box, Modal } from "@material-ui/core";
-import "../../../styles/global.css";
-import Navbar from "../../../components/navbar/navbar";
-import Alert from '@mui/material/Alert';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Grid, Typography, Button, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@material-ui/core";
+import "../../styles/global.css";
+import Navbar from "../../components/navbar/navbar";
 
-export default function ListUser() {
-    const [openCreateModal, setOpenCreateModal] = useState(false);
-    const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [showAlertCreate, setShowAlertCreate] = useState(false);
-    const [showAlertDelete, setShowAlertDelete] = useState(false);
+const ListUsers = () => {
+  const [users, setUsers] = useState([]);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editedUser, setEditedUser] = useState({
+    nombre: "",
+    apellido: "",
+    tipo_usuario: "",
+    numero_cedula: "",
+    telefono: "",
+    email: "",
+    password: ""
+  });
 
-    const handleOpenCreateModal = () => setOpenCreateModal(true);
-    const handleCloseCreateModal = () => setOpenCreateModal(false);
-    const handleOpenDeleteModal = () => setOpenDeleteModal(true);
-    const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-    const handleCreateUser = () => {
-        setShowAlertCreate(true);
-        handleCloseCreateModal();
-        setTimeout(() => {
-            setShowAlertCreate(false);
-        }, 3000);
-    };
-    const handleDeleteUser = () => {
-        setShowAlertDelete(true);
-        handleCloseDeleteModal(true)
-        setTimeout(() => {
-            setShowAlertDelete(false);
-        }, 3000);
-    };
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/get/users');
+      setUsers(response.data['Resultado API: ']);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
-    return (
-        <>
-            <Grid container>
-                <Grid item xs={1}>
-                    <Navbar />
-                </Grid>
-                <Grid item xs={11}>
-                    <Box className="container-global">
-                        <Box>
-                            <Grid item xs={12}>
-                                <Typography variant="h4" component="h1" className="titles">Usuarios en BasketEase (1)</Typography>
-                                <Typography component="p" className="texts">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit perspiciatis explicabo libero, sint fugiat magnam placeat voluptate praesentium doloribus accusamus necessitatibus eos? Atque in modi voluptate. Soluta quos vel sed.</Typography>
-                            </Grid>
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setEditedUser({
+      nombre: user.nombre,
+      apellido: user.apellido,
+      tipo_usuario: user.tipo_usuario,
+      numero_cedula: user.numero_cedula,
+      telefono: user.telefono,
+      email: user.email,
+      password: user.password
+    });
+    setOpenEditDialog(true);
+  };
 
-                            <Grid item xs={12}>
-                                <TableContainer component={Paper}>
-                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>Nombre</TableCell>
-                                                <TableCell>Apellido</TableCell>
-                                                <TableCell>Tipo de Usuario</TableCell>
-                                                <TableCell>Cédula</TableCell>
-                                                <TableCell>Teléfono</TableCell>
-                                                <TableCell>Correo</TableCell>
-                                                <TableCell>F. Registro</TableCell>
-                                                <TableCell>Acciones</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+    setSelectedUser(null);
+    setEditedUser({
+      nombre: "",
+      apellido: "",
+      tipo_usuario: "",
+      numero_cedula: "",
+      telefono: "",
+      email: "",
+      password: ""
+    });
+  };
 
-                                            <TableRow
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                                <TableCell>
-                                                    1
-                                                </TableCell>
-                                                <TableCell>
-                                                    2
-                                                </TableCell>
-                                                <TableCell>
-                                                    3
-                                                </TableCell>
-                                                <TableCell>
-                                                    4
-                                                </TableCell>
-                                                <TableCell>
-                                                    5
-                                                </TableCell>
-                                                <TableCell>
-                                                    6
-                                                </TableCell>
-                                                <TableCell>
-                                                    7
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Button className="btn-action" onClick={handleOpenCreateModal}>
-                                                        <ModeEditIcon sx={{ fontSize: 20 }} />
-                                                    </Button>
-                                                    <Button className="btn-action" onClick={handleOpenDeleteModal}>
-                                                        <DeleteIcon sx={{ fontSize: 20 }} />
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableBody>
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedUser((prevUser) => ({
+      ...prevUser,
+      [name]: value
+    }));
+  };
 
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
-                        </Box>
-                        <Modal
-                            open={openCreateModal}
-                            onClose={handleCloseCreateModal}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box className="container-modal">
-                                <Typography id="modal-modal-title" variant="h5">
-                                    Formulario de creación
-                                </Typography>
-                                <Box className="modal-body">
-                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                        Por favor para crear un usuario llene los siguientes campos
-                                    </Typography>
+  const handleSaveEdit = async () => {
+    try {
+      await axios.put(`http://127.0.0.1:8000/update/users/${selectedUser.user_id}`, editedUser);
+      alert("Usuario actualizado exitosamente");
+      fetchUsers();
+      handleCloseEditDialog();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Error actualizando usuario");
+    }
+  };
 
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                required
-                                                label="Nombre"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                required
-                                                label="Apellido"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Cédula"
-                                                type="Number"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Teléfono"
-                                                type="Number"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Correo Electrónico"
-                                                type="email"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                label="Contraseña"
-                                                type="password"
-                                                variant="standard"
-                                                fullWidth
-                                                margin="normal"
-                                                onChange=""
-                                            />
-                                        </Grid>
+  return (
+    <>
+      <Grid container>
+        <Grid item xs={1}>
+          <Navbar />
+        </Grid>
+        <Grid item xs={11}>
+          <Box className="container-global">
+            <Typography variant="h4">Lista de Usuarios</Typography>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ID de Usuario</TableCell>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell>Apellido</TableCell>
+                    <TableCell>Tipo de Usuario</TableCell>
+                    <TableCell>Número de Cédula</TableCell>
+                    <TableCell>Teléfono</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Acciones</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users.map((user) => (
+                    <TableRow key={user.user_id}>
+                      <TableCell>{user.user_id}</TableCell>
+                      <TableCell>{user.nombre}</TableCell>
+                      <TableCell>{user.apellido}</TableCell>
+                      <TableCell>{user.tipo_usuario}</TableCell>
+                      <TableCell>{user.numero_cedula}</TableCell>
+                      <TableCell>{user.telefono}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Button variant="contained" color="primary" onClick={() => handleEdit(user)}>
+                          Editar
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        </Grid>
+      </Grid>
 
-                                        <Button className="button-primary" type="submit" variant="contained" onClick={handleCreateUser}>
-                                            Crear
-                                        </Button>
-                                        <Grid item xs={6}></Grid>
-                                    </Grid>
-                                </Box>
-                            </Box>
-
-                        </Modal>
-                        <Dialog
-                            open={openDeleteModal}
-                            onClose={handleCloseDeleteModal}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                        >
-                            <DialogTitle id="alert-dialog-title">
-                                {"¿Esta seguro de eliminar el usuario?"}
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    Usted desea eliminar el usuario ()
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleDeleteUser}>Si</Button>
-                                <Button onClick={handleCloseDeleteModal} autoFocus>
-                                    No
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </Box>
-                </Grid>
-            </Grid>
-            {showAlertCreate && (
-                <Alert severity="success" variant="filled" className="alerts">
-                    ¡Usuario creado exitosamente!
-                </Alert>
-            )}
-            {showAlertDelete && (
-                <Alert severity="info" variant="filled" className="alerts">
-                    ¡Usuario eliminado exitosamente!
-                </Alert>
-            )}
-
-        </>
-    )
+      {/* Edit Dialog */}
+      <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
+        <DialogTitle>Editar Usuario</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Nombre"
+            name="nombre"
+            value={editedUser.nombre}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Apellido"
+            name="apellido"
+            value={editedUser.apellido}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Tipo de Usuario"
+            name="tipo_usuario"
+            value={editedUser.tipo_usuario}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Número de Cédula"
+            name="numero_cedula"
+            value={editedUser.numero_cedula}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Teléfono"
+            name="telefono"
+            value={editedUser.telefono}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Email"
+            name="email"
+            value={editedUser.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Contraseña"
+            name="password"
+            type="password"
+            value={editedUser.password}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditDialog} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleSaveEdit} color="primary">
+            Guardar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 }
+
+export default ListUsers;
