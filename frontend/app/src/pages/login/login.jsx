@@ -48,9 +48,8 @@ export default function LoginPage() {
 
             if (response.ok) {
                 const data = await response.json();
-                // Aquí puedes guardar el token en el localStorage o en el contexto
                 localStorage.setItem('token', data.access_token);
-                navigate('/home'); // Redirigir al usuario a la página de inicio
+                navigate('/home');
             } else {
                 setError('Nombre de usuario o contraseña incorrectos');
             }
